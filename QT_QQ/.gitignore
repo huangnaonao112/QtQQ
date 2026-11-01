@@ -1,0 +1,26 @@
+﻿# 构建产物
+Debug/
+x64/
+*.obj
+*.pdb
+*.ilk
+*.log
+*.tlog/
+*.pch
+*.idb
+*.res
+*.exe
+*.dll
+# Qt 生成文件
+Debug/qt/
+*.pro.user*
+# 测试截图与日志
+clientA.log
+clientB.log
+/*.png
+ccmain_window.png
+# 其他
+.vs/
+.vscode/
+
+*.user

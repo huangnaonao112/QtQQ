@@ -1,0 +1,12 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="../QtQQ_Bot/QtQQ_Bot.vcxproj" Id="51f07954-a2fb-4845-b7bc-b425b34bfa7c">
+    <Platform Project="x64" />
+  </Project>
+  <Project Path="../QtQQ_Server/QtQQ_Server.vcxproj" Id="cf41e906-7bd9-40ff-befb-f8f675e2ce73">
+    <Platform Project="x64" />
+  </Project>
+  <Project Path="QT_QQ.vcxproj" Id="ed712085-94d0-4b49-85fe-0581f3da76a7" />
+</Solution>

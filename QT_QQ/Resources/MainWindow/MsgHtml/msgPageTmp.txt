@@ -1,0 +1,61 @@
+var external0 = null;
+var external = null;
+
+
+String.prototype.format = function() {  
+    if(arguments.length == 0) return this;  
+    var obj = arguments[0];  
+    var s = this;  
+    for(var key in obj) {  
+        s = s.replace(new RegExp("\\{\\{" + key + "\\}\\}", "g"), obj[key]);  
+    }  
+    return s;  
+}  
+
+new QWebChannel(qt.webChannelTransport,
+	function(channel) {
+		external0 = channel.objects.external0;
+		external = channel.objects.external;
+	}
+);
+
+function appendHtml0(msg){
+	$("#placeholder").append(external0.msgRHtmlTmpl.format(msg));
+	window.scrollTo(0,document.body.scrollHeight); ;  
+};
+
+function recvHtml(msg){
+	$("#placeholder").append(external.msgLHtmlTmpl.format(msg));
+	window.scrollTo(0,document.body.scrollHeight); ;  
+};
+// 兜底气泡：接收方的 recvHtml_<账号> 函数不存在时用它。
+// 什么时候会不存在？服务端新加的员工——JS 是客户端启动时按当时的员工表
+// 生成的，老客户端里没有这个函数。头像路径由 C++ 从数据库查好传进来。
+function recvHtmlGeneric(headSrc, msg){
+	var img = headSrc ? '<img class="header" src="' + headSrc + '">' : '';
+	var html = '<div class="msg-wrap left">' + img
+	         + '<div class="msg">' + msg.MSG + '<span class="trigon"></span></div>'
+	         + '</div>';
+	$("#placeholder").append(html);
+	window.scrollTo(0, document.body.scrollHeight);
+};
+//AI 流式回复：同一个 sender 的增量追加到同一个气泡
+var streamBubbles = {};
+function streamAppend(sender, delta, done){
+	var key = "s" + sender;
+	if (!streamBubbles[key]) {
+		var obj = window["external_" + sender];
+		// 找不到发送者的模板对象时，至少要建一个空气泡：
+		// 否则 append("") 之后 $("#placeholder .msg-wrap").last() 会指向上一条消息，
+		// 后面的增量全灌进别人的气泡里
+		if (obj) {
+			$("#placeholder").append(obj.msgLHtmlTmpl.format({header: "", MSG: ""}));
+		} else {
+			$("#placeholder").append('<div class="msg-wrap left"><div class="msg" style="margin-left:44px"><span class="trigon"></span></div></div>');
+		}
+		streamBubbles[key] = $("#placeholder .msg-wrap").last().find(".msg");
+	}
+	streamBubbles[key].append(delta);
+	if (done) delete streamBubbles[key];
+	window.scrollTo(0,document.body.scrollHeight);
+}

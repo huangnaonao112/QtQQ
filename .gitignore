@@ -1,0 +1,29 @@
+# 构建产物
+Debug/
+build-x64/
+build-msvc64/
+*.obj
+*.pdb
+*.ilk
+*.log
+*.tlog/
+*.pch
+*.idb
+*.exe
+*.dll
+*.ipch
+.vs/
+
+# 运行时配置（含密钥，首次运行自动生成）
+client.ini
+server.ini
+bot.ini
+server_debug.log
+Debuginicolor.ini
+
+# VS 杂项
+*.APS
+*.user
+
+# 个人/本地文件
+huangnaonao.jpg

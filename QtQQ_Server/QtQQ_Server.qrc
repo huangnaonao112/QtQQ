@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="QtQQ_Server">
+        <file>Resources/images/gsq.png</file>
+    </qresource>
+</RCC>

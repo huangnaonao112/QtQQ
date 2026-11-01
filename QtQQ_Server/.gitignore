@@ -1,0 +1,7 @@
+build-msvc64/
+.vs/
+*.log
+*.user
+*.ipch
+server.ini
+server_debug.log
